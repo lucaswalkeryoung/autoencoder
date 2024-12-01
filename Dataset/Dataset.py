@@ -29,7 +29,7 @@ class Dataset(datatools.Dataset):
 
         self.images = []
 
-        if torch.cuda.is_available():
+        if not torch.cuda.is_available():
             root = pathlib.Path.home() / 'Desktop/MUNIT/'
         else:
             root = pathlib.Path().resolve()

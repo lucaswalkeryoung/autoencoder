@@ -24,12 +24,16 @@ class Network(networks.Module):
 
         self.name = name
 
-        self.path = pathlib.Path().resolve()
-        self.path = self.path.parent
-        self.path = self.path / f'drive'
-        self.path = self.path / f'MyDrive'
-        self.path = self.path / f'Models'
-        self.path = self.path / f'{name}.safetensors'
+        if not torch.cuda.is_available():
+            self.path = pathlib.Path().resolve()
+            self.path = self.path.parent
+            self.path = self.path / f'drive'
+            self.path = self.path / f'MyDrive'
+            self.path = self.path / f'Models'
+            self.path = self.path / f'{name}.safetensors'
+
+        else:
+            self.path = pathlib.Path(f"./drive/MyDrive/Models/{name}.safetensors")
 
 
     # ----------------------------------------------------------------------------------------------
