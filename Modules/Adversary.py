@@ -22,26 +22,26 @@ class Adversary(Network):
     def __init__(self):
         super(Adversary, self).__init__(name="Adversary")
 
-        self.conv1 = networks.Conv2d(3,  32, kernel_size=3, stride=1, padding=1)
-        self.norm1 = networks.BatchNorm2d(32)
-        self.conv2 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm2 = networks.BatchNorm2d(32)
-        self.conv3 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm3 = networks.BatchNorm2d(32)
-        self.conv4 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm4 = networks.BatchNorm2d(32)
-        self.conv5 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm5 = networks.BatchNorm2d(32)
-        self.conv6 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm6 = networks.BatchNorm2d(32)
-        self.conv7 = networks.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)
-        self.norm7 = networks.BatchNorm2d(32)
-        self.conv8 = networks.Conv2d(32,  1, kernel_size=3, stride=1, padding=1)
+        self.conv1 = networks.Conv2d(3,  16, kernel_size=3, stride=1, padding=1)
+        self.norm1 = networks.BatchNorm2d(16)
+        self.conv2 = networks.Conv2d(16, 16, kernel_size=3, stride=2, padding=1)
+        self.norm2 = networks.BatchNorm2d(16)
+        self.conv3 = networks.Conv2d(16, 16, kernel_size=3, stride=1, padding=1)
+        self.norm3 = networks.BatchNorm2d(16)
+        self.conv4 = networks.Conv2d(16, 16, kernel_size=3, stride=2, padding=1)
+        self.norm4 = networks.BatchNorm2d(16)
+        self.conv5 = networks.Conv2d(16, 16, kernel_size=3, stride=1, padding=1)
+        self.norm5 = networks.BatchNorm2d(16)
+        self.conv6 = networks.Conv2d(16, 16, kernel_size=3, stride=2, padding=1)
+        self.norm6 = networks.BatchNorm2d(16)
+        self.conv7 = networks.Conv2d(16, 16, kernel_size=3, stride=1, padding=1)
+        self.norm7 = networks.BatchNorm2d(16)
+        self.conv8 = networks.Conv2d(16,  1, kernel_size=3, stride=2, padding=1)
 
         self.final = networks.AdaptiveMaxPool2d((1, 1))
 
         self.funct = networks.LeakyReLU(0.2)
-        self.noise = networks.Dropout(0.100)
+        self.noise = networks.Dropout(0.000)
 
 
     # ------------------------------------------------------------------------------------------
@@ -72,5 +72,5 @@ class Adversary(Network):
         negative = 0 + (correctness * certainty).mean().detach()
         positive = 1 - (correctness * certainty).mean()
 
-        return positive * 10000, negative * 100
+        return positive * 10, negative * 10
 

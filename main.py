@@ -67,7 +67,7 @@ except FileNotFoundError:
     decoder.init()
     decoder.save()
 
-a_optimizer = torch.optim.Adam(adversary.parameters(), lr=2e-5)
+a_optimizer = torch.optim.Adam(adversary.parameters(), lr=1e-5)
 e_optimizer = torch.optim.Adam(encoder.parameters(), lr=1e-5)
 d_optimizer = torch.optim.Adam(decoder.parameters(), lr=1e-5)
 
@@ -75,15 +75,12 @@ d_optimizer = torch.optim.Adam(decoder.parameters(), lr=1e-5)
 # --------------------------------------------------------------------------------------------------
 # --------------------------------------- Main Training Loop ---------------------------------------
 # --------------------------------------------------------------------------------------------------
+labels = torch.cat((torch.ones(BATCH_SIZE, 1), torch.zeros(BATCH_SIZE, 1))).to(device)
+
 for eid in range(EPOCHS):
     for bid, source in enumerate(dataset):
 
-        real_labels = torch.ones(source.size(0),  1)
-        fake_labels = torch.zeros(source.size(0), 1)
-        labels = torch.cat((real_labels, fake_labels))
-
         source = source.to(device)
-        labels = labels.to(device)
 
         a_optimizer.zero_grad()
         e_optimizer.zero_grad()
@@ -92,6 +89,8 @@ for eid in range(EPOCHS):
         target = encoder(source)
         target = decoder(target)
 
+        recreate = decoder.loss(source, target)
+
         images = torch.cat((source.clone().detach(), target.clone().detach()))
         sample = torch.randperm(images.size(0))
         images = images[sample]
@@ -99,16 +98,15 @@ for eid in range(EPOCHS):
 
         predictions = adversary(images)
         positive, negative = adversary.loss(predictions, labels)
-        recreate = decoder.loss(source, target)
 
-        if bid % 2 and bid > 50:
-            (recreate + negative).backward()
-            e_optimizer.step()
-            d_optimizer.step()
-
-        else:
+        if bid % 5 == 0:
             positive.backward()
             a_optimizer.step()
+
+        else:
+            (recreate.backward())
+            e_optimizer.step()
+            d_optimizer.step()
 
         print(f"[{eid:03}:{bid:03}] Positive: {positive.item()}")
         print(f"[{eid:03}:{bid:03}] Negative: {negative.item()}")

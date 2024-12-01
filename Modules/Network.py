@@ -33,7 +33,7 @@ class Network(networks.Module):
             self.path = self.path / f'{name}.safetensors'
 
         else:
-            self.path = pathlib.Path(f"./drive/MyDrive/Models/{name}.safetensors")
+            self.path = pathlib.Path(f"./Models/{name}.safetensors")
 
 
     # ----------------------------------------------------------------------------------------------
