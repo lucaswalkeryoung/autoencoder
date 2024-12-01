@@ -23,7 +23,13 @@ class Network(networks.Module):
         super(Network, self).__init__()
 
         self.name = name
-        self.path = pathlib.Path(f"./drive/MyDrive/Models/{name}.safetensors")
+
+        self.path = pathlib.Path().resolve()
+        self.path = self.path.parent
+        self.path = self.path / f'drive'
+        self.path = self.path / f'MyDrive'
+        self.path = self.path / f'Models'
+        self.path = self.path / f'{name}.safetensors'
 
 
     # ----------------------------------------------------------------------------------------------
