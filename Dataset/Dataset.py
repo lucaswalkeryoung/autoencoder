@@ -33,10 +33,10 @@ class Dataset(datatools.Dataset):
             root = pathlib.Path.home() / 'Desktop/MUNIT/'
         else:
             root = pathlib.Path().resolve()
-            root = path.parent
-            root = path / 'drive'
-            root = path / 'MyDrive'
-            root = path / 'MUNIT'
+            root = root.parent
+            root = root / 'drive'
+            root = root / 'MyDrive'
+            root = root / 'MUNIT'
 
         self.images.extend((root / 'Desktop/MUNIT/Pantheon').rglob('*.png'))
         self.images.extend((root / 'Desktop/MUNIT/Hilda').rglob('*.png'))

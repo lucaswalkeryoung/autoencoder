@@ -23,7 +23,7 @@ class Network(networks.Module):
         super(Network, self).__init__()
 
         self.name = name
-        self.path = pathlib.Path(f"./Models/{name}.safetensors")
+        self.path = pathlib.Path(f"./drive/MyDrive/Models/{name}.safetensors")
 
 
     # ----------------------------------------------------------------------------------------------
