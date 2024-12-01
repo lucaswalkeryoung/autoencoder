@@ -24,7 +24,7 @@ class Network(networks.Module):
 
         self.name = name
 
-        if not torch.cuda.is_available():
+        if torch.cuda.is_available():
             self.path = pathlib.Path().resolve()
             self.path = self.path.parent
             self.path = self.path / f'drive'
