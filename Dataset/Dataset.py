@@ -28,8 +28,19 @@ class Dataset(datatools.Dataset):
         # ----------------------------------------------------------------------------------
 
         self.images = []
-        self.images.extend((pathlib.Path.home() / 'Desktop/MUNIT/Pantheon').rglob('*.png'))
-        self.images.extend((pathlib.Path.home() / 'Desktop/MUNIT/Hilda').rglob('*.png'))
+
+        if torch.cuda.is_available():
+            root = pathlib.Path.home() / 'Desktop/MUNIT/'
+        else:
+            root = pathlib.Path().resolve()
+            root = path.parent
+            root = path / 'drive'
+            root = path / 'MyDrive'
+            root = path / 'MUNIT'
+
+        self.images.extend((root / 'Desktop/MUNIT/Pantheon').rglob('*.png'))
+        self.images.extend((root / 'Desktop/MUNIT/Hilda').rglob('*.png'))
+        print(len(self.images))
 
 
         # ----------------------------------------------------------------------------------
