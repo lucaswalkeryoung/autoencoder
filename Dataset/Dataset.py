@@ -41,7 +41,6 @@ class Dataset(datatools.Dataset):
 
         self.images.extend((root / 'Pantheon').rglob('*.png'))
         self.images.extend((root / 'Hilda').rglob('*.png'))
-        print(len(self.images))
 
 
         # ----------------------------------------------------------------------------------
